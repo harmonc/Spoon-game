@@ -15,4 +15,15 @@ public class IcecreamScript : MonoBehaviour
     {
         
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Test");
+        if (collision.gameObject.tag == "Player")
+        {
+            this.gameObject.transform.SetParent(collision.gameObject.transform);
+            Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
+            Destroy(rb);
+            this.tag = "Player";
+        }
+    }
 }
