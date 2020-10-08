@@ -8,6 +8,7 @@ public class IcecreamScript : MonoBehaviour
     public Sprite strawberry;
     public Sprite vanilla;
     public Sprite coffee;
+    private GameObject top;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,13 +42,20 @@ public class IcecreamScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (collision.gameObject.tag == "Enemy") {
+            Destroy(this.gameObject);
+            top.transform.position = this.gameObject.transform.position + new Vector3(-0.4f, -0.7f, -1.0f);
+            Destroy(collision.gameObject);
+        }
+
         if (collision.gameObject.tag == "Player")
         {
-            GameObject top = collision.transform.Find("Top").gameObject;
+            top = collision.transform.Find("Top").gameObject;
             if (top.gameObject.transform.position.y < transform.position.y)
             {
                 this.gameObject.transform.SetParent(collision.gameObject.transform);
-                top.transform.position = this.gameObject.transform.position + new Vector3(0.0f,1.0f,-1.0f);
+                top.transform.position = this.gameObject.transform.position + new Vector3(0.4f,0.7f,-1.0f);
                 Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
                 Destroy(rb);
             }
