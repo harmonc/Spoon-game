@@ -31,6 +31,16 @@ public class PlayerScript : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, xBounds.x, xBounds.y), Mathf.Clamp(transform.position.y, yBounds.x, yBounds.y), transform.position.z);
     }
 
+    public void Deleted(float yPos) {
+        for (int i = 0; i < transform.childCount; i++) {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (child.tag == "Cream" && child.transform.position.y > yPos)
+            {
+                child.AddComponent<Rigidbody2D>();
+            }
+        }
+    }
+
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();

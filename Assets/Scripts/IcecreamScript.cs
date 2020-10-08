@@ -44,9 +44,13 @@ public class IcecreamScript : MonoBehaviour
     {
 
         if (collision.gameObject.tag == "Enemy") {
-            Destroy(this.gameObject);
+            PlayerScript test = this.GetComponentInParent<PlayerScript>();
+            if (test != null) {
+                test.Deleted(this.transform.position.y);
+            }
             top.transform.position = this.gameObject.transform.position + new Vector3(-0.4f, -0.7f, -1.0f);
             Destroy(collision.gameObject);
+            Destroy(this.gameObject);
         }
 
         if (collision.gameObject.tag == "Player")
