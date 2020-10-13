@@ -8,6 +8,11 @@ public class PlayerScript : MonoBehaviour
     public float speed = 10.0f;
     public Vector2 xBounds;
     public Vector2 yBounds;
+    public GameObject gameOver;
+    public GameObject spawner1;
+    public GameObject spawner2;
+    public GameObject spawner3;
+
 
     private float movementX;
     private float movementY;
@@ -38,6 +43,16 @@ public class PlayerScript : MonoBehaviour
             {
                 child.AddComponent<Rigidbody2D>();
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" && transform.childCount == 1) {
+            gameOver.SetActive(true);
+            spawner1.SetActive(false);
+            spawner2.SetActive(false);
+            spawner3.SetActive(true);
         }
     }
 
