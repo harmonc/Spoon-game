@@ -61,6 +61,7 @@ public class IcecreamScript : MonoBehaviour
             top = collision.transform.Find("Top").gameObject;
             if (top.gameObject.transform.position.y < transform.position.y)
             {
+                gameObject.GetComponent<AudioSource>().Play();
                 this.gameObject.transform.SetParent(collision.gameObject.transform);
                 top.transform.position = this.gameObject.transform.position + new Vector3(0.4f* transform.localScale.x, 0.7f * transform.localScale.y, -1.0f);
                 Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
