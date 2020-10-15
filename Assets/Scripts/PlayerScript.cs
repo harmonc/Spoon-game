@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,8 +13,9 @@ public class PlayerScript : MonoBehaviour
     public GameObject spawner1;
     public GameObject spawner2;
     public GameObject spawner3;
+    public TextMeshProUGUI scoreText;
 
-
+    private int score = 0;
     private float movementX;
     private float movementY;
     private Rigidbody2D rb;
@@ -37,13 +39,25 @@ public class PlayerScript : MonoBehaviour
     }
 
     public void Deleted(float yPos) {
+        losePoint();
         for (int i = 0; i < transform.childCount; i++) {
             GameObject child = transform.GetChild(i).gameObject;
             if (child.tag == "Cream" && child.transform.position.y > yPos)
             {
+                losePoint();
                 child.AddComponent<Rigidbody2D>();
             }
         }
+    }
+
+    public void gainPoint() {
+        score++;
+        scoreText.text = ""+score;
+    }
+
+    private void losePoint() {
+        score--;
+        scoreText.text = "" + score;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -53,6 +67,7 @@ public class PlayerScript : MonoBehaviour
             spawner1.SetActive(false);
             spawner2.SetActive(false);
             spawner3.SetActive(true);
+            Destroy(this.gameObject);
         }
     }
 

@@ -30,6 +30,8 @@ public class IcecreamScript : MonoBehaviour
         {
             cream.sprite = coffee;
         }
+        float r2 = Random.Range(0.5f,2.0f);
+        transform.localScale = new Vector3(r2,r2,r2);
     }
 
     // Update is called once per frame
@@ -48,18 +50,19 @@ public class IcecreamScript : MonoBehaviour
             if (test != null) {
                 test.Deleted(this.transform.position.y);
             }
-            top.transform.position = this.gameObject.transform.position + new Vector3(-0.4f, -0.7f, -1.0f);
+            top.transform.position = gameObject.transform.position + new Vector3(-0.4f*transform.localScale.x, -0.7f * transform.localScale.y, -1.0f);
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
         }
 
         if (collision.gameObject.tag == "Player")
         {
+            collision.gameObject.GetComponent<PlayerScript>().gainPoint();
             top = collision.transform.Find("Top").gameObject;
             if (top.gameObject.transform.position.y < transform.position.y)
             {
                 this.gameObject.transform.SetParent(collision.gameObject.transform);
-                top.transform.position = this.gameObject.transform.position + new Vector3(0.4f,0.7f,-1.0f);
+                top.transform.position = this.gameObject.transform.position + new Vector3(0.4f* transform.localScale.x, 0.7f * transform.localScale.y, -1.0f);
                 Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
                 Destroy(rb);
             }
